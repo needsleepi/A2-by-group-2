@@ -1,0 +1,108 @@
+#include <iostream>
+using namespace std;
+
+// Cấu trúc thông tin phòng
+struct PhongKhachSan {
+    char maPhong[10]; 
+    char loaiPhong[20]; 
+    int tang;
+    int sucChua;
+    double giaThue;
+    bool trangThai;       // true: Còn trống, false: Đã thuê
+};
+
+// Hàm so sánh 2 chuỗi char
+bool soSanhChuoi(char s1[], char s2[]) {
+    int i = 0;
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) return false;
+        i++;
+    }
+    return s1[i] == s2[i];
+}
+
+// Hàm in thông tin 1 phòng
+void xuatPhong(PhongKhachSan p) {
+    cout << "Ma: " << p.maPhong 
+         << " | Loai: " << p.loaiPhong 
+         << " | Tang: " << p.tang 
+         << " | Suc chua: " << p.sucChua << " nguoi"
+         << " | Gia: " << p.giaThue << " VND"
+         << " | Trang thai: " << (p.trangThai ? "Con trong" : "Da thue") << endl;
+}
+
+// 1. Tìm kiếm theo Mã phòng
+void timTheoMa(PhongKhachSan ds[], int n, char maCanTim[]) {
+    bool timThay = false;
+    cout << "\n--- KET QUA TIM KIEM THEO MA PHONG [" << maCanTim << "] ---\n";
+    
+    for (int i = 0; i < n; i++) {
+        if (soSanhChuoi(ds[i].maPhong, maCanTim)) {
+            xuatPhong(ds[i]);
+            timThay = true;
+            break; // Tìm thấy thì dừng ngay
+        }
+    }
+    
+    if (!timThay) {
+        cout << "Khong tim thay phong co ma: " << maCanTim << endl;
+    }
+}
+
+// 2. Tìm kiếm theo Trạng thái
+void timTheoTrangThai(PhongKhachSan ds[], int n, bool trangThaiCanTim) {
+    bool timThay = false;
+    cout << "\n--- DANH SACH PHONG " << (trangThaiCanTim ? "[CON TRONG]" : "[DA THUE]") << " ---\n";
+    
+    for (int i = 0; i < n; i++) {
+        if (ds[i].trangThai == trangThaiCanTim) {
+            xuatPhong(ds[i]);
+            timThay = true;
+        }
+    }
+    
+    if (!timThay) {
+        cout << "Khong co phong nao trong trang thai nay.\n";
+    }
+}
+
+int main() {
+    // Khai báo mảng phòng mẫu
+    PhongKhachSan danhSach[200] = {
+        {"P101", "Standard", 1, 2, 500000, true},   // Còn trống
+        {"P102", "Standard", 1, 2, 500000, false},  // Đã thuê
+        {"P201", "Deluxe",   2, 3, 800000, true},   // Còn trống
+        {"P301", "VIP",      3, 4, 1500000, false}  // Đã thuê
+    };
+    int n = 4; // Số lượng phòng hiện có
+
+    int luaChon;
+    do {
+        cout << "\n========== CHUONG TRINH TIM KIEM PHONG ==========\n";
+        cout << "1. Tim kiem theo Ma phong\n";
+        cout << "2. Tim kiem theo Trang thai (Con trong / Da thue)\n";
+        cout << "0. Thoat\n";
+        cout << "Chon chuc nang: ";
+        cin >> luaChon;
+
+        if (luaChon == 1) {
+            char ma[10];
+            cout << "Nhap ma phong can tim (vd: P101): ";
+            cin >> ma;
+            timTheoMa(danhSach, n, ma);
+        } 
+        else if (luaChon == 2) {
+            int tt;
+            cout << "Nhap trang thai can tim (1: Con trong, 0: Da thue): ";
+            cin >> tt;
+            timTheoTrangThai(danhSach, n, tt == 1);
+        }
+        else if (luaChon != 0) {
+            cout << "Lua chon khong hop le, vui long nhap lai!\n";
+        }
+
+    } while (luaChon != 0);
+
+    cout << "Da thoat chuong trinh.\n";
+    return 0;
+}
