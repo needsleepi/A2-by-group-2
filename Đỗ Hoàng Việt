@@ -1,16 +1,64 @@
-Bước 4:
-// Hàm sắp xếp danh sách phòng theo giá thuê tăng dần
-void sapXepGiaThueTangDan(PhongKhachSan ds[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            // Nếu giá phòng đứng trước lớn hơn giá phòng đứng sau
-            if (ds[i].getGiaThue() > ds[j].getGiaThue()) {
-                // Hoán đổi 2 phòng cho nhau
-                PhongKhachSan temp = ds[i];
-                ds[i] = ds[j];
-                ds[j] = temp;
+#include <iostream>
+using namespace std;
+
+class Phong {
+public:
+    string maPhong;
+    string loaiPhong;
+    int tang;
+    int sucChua;
+    double giaThue;
+    string trangThai;
+};
+
+class QuanLyPhong {
+public:
+    Phong ds[200];
+    int n;
+
+
+    void sapXep() {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (ds[i].giaThue > ds[j].giaThue) {
+                    Phong temp = ds[i];
+                    ds[i] = ds[j];
+                    ds[j] = temp;
+                }
             }
         }
     }
-    cout << "\n[Thong bao] Da sap xep danh sach theo gia thue tang dan!\n";
+
+
+    void inDanhSach() {
+        for (int i = 0; i < n; i++) {
+            cout << "Ma phong: " << ds[i].maPhong << endl;
+            cout << "Gia thue: " << ds[i].giaThue << endl;
+            cout << "------------------" << endl;
+        }
+    }
+};
+
+int main() {
+    QuanLyPhong ql;
+
+    cout << "Nhap so phong: ";
+    cin >> ql.n;
+
+
+    for (int i = 0; i < ql.n; i++) {
+        cout << "Nhap gia thue phong " << i + 1 << ": ";
+        cin >> ql.ds[i].giaThue;
+    }
+
+    cout << "\nDanh sach truoc khi sap xep:\n";
+    ql.inDanhSach();
+
+ 
+    ql.sapXep();
+
+    cout << "\nDanh sach sau khi sap xep tang dan:\n";
+    ql.inDanhSach();
+
+    return 0;
 }
