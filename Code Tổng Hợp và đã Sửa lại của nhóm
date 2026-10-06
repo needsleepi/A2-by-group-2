@@ -1,0 +1,212 @@
+#include <iostream>
+
+using namespace std;
+// Class Quan lý thông tin 1 Phong
+class Phong {
+private:
+    char ma[15];
+    char loai[20];
+    int tang, sucChua;
+    double gia;
+    int trangThai; // 1: Con trong, 0: Da thue
+
+public:
+    void nhap() {
+        cout << "  - Ma phong: "; cin >> ma;
+        cout << "  - Loai phong: "; cin >> loai;
+        cout << "  - Tang: "; cin >> tang;
+        cout << "  - Suc chua: "; cin >> sucChua;
+        cout << "  - Gia thue: "; cin >> gia;
+        cout << "  - Trang thai (1: Con trong, 0: Da thue): "; cin >> trangThai;
+    }
+
+    void xuat() const {
+        cout << ma << "\t" 
+             << loai << "\t" 
+             << tang << "\t" 
+             << sucChua << "\t\t" 
+             << (long long)gia << "\t\t" 
+             << (trangThai == 1 ? "Con trong" : "Da thue") << endl;
+    }
+
+    const char* getMa() const { return ma; }
+    double getGia() const { return gia; }
+    int getTrangThai() const { return trangThai; }
+};
+// Ham so sánh 2 chuoi mang char[]
+bool bangNhau(const char s1[], const char s2[]) {
+    int i = 0;
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) return false;
+        i++;
+    }
+    return s1[i] == s2[i];
+}
+
+// Class Quan ly Danh sách Phòng
+class QuanLy {
+private:
+    Phong ds[200];
+    int n = 0;
+public:
+    // 1. Nhap danh sách phòng
+    void nhapDS() {
+        do {
+            cout << "Nhap so luong phong (0 < n < 200): ";
+            cin >> n;
+        } while (n <= 0 || n >= 200);
+
+        for (int i = 0; i < n; i++) {
+            cout << "\n--- Nhap phong thu " << i + 1 << " ---\n";
+            ds[i].nhap();
+        }
+    }
+
+    // 2. Xuat danh sach phong
+    void xuatDS() const {
+        if (n == 0) {
+            cout << "\n[!] Danh sach phong dang trong!\n";
+            return;
+        }
+        cout << "\n-------------------- DANH SACH PHONG --------------------\n";
+        cout << "Ma\tLoai\tTang\tSuc chua\tGia thue\tTrang thai\n";
+        cout << "---------------------------------------------------------\n";
+        for (int i = 0; i < n; i++) {
+            ds[i].xuat();
+        }
+    }
+
+    // 3. Them phong vào vi tri k
+    void boSung(int k) {
+        if (k < 0 || k > n || n >= 200) {
+            cout << "=> Vi tri k khong hop le hoac danh sach da day!\n";
+            return;
+        }
+        Phong p;
+        cout << "\n--- Nhap thong tin phong can them ---\n";
+        p.nhap();
+
+        for (int i = n; i > k; i--) {
+            ds[i] = ds[i - 1];
+        }
+        ds[k] = p;
+        n++;
+        cout << "=> Da them phong vao vi tri " << k << " thanh cong!\n";
+    }
+
+    // 4. Xoa phong tai vi tri k
+    void xoa(int k) {
+        if (k < 0 || k >= n) {
+            cout << "=> Vi tri k khong hop le!\n";
+            return;
+        }
+        for (int i = k; i < n - 1; i++) {
+            ds[i] = ds[i + 1];
+        }
+        n--;
+        cout << "=> Da xoa phong tai vi tri " << k << " thanh cong!\n";
+    }
+
+    // 5. Tim kiem phong theo Ma
+    void timTheoMa(const char maCanTim[]) const {
+        bool timThay = false;
+        cout << "\n--- KET QUA TIM KIEM THEO MA [" << maCanTim << "] ---\n";
+        for (int i = 0; i < n; i++) {
+            if (bangNhau(ds[i].getMa(), maCanTim)) {
+                ds[i].xuat();
+                timThay = true;
+                break;
+            }
+        }
+        if (!timThay) cout << "=> Khong tim thay phong co ma: " << maCanTim << endl;
+    }
+
+    // 6. Tim kiem phong theo Trang thai (1: trong, 0: da thue)
+    void timTheoTrangThai(int tt) const {
+        bool timThay = false;
+        cout << "\n--- DANH SACH PHONG [" << (tt == 1 ? "CON TRONG" : "DA THUE") << "] ---\n";
+        for (int i = 0; i < n; i++) {
+            if (ds[i].getTrangThai() == tt) {
+                ds[i].xuat();
+                timThay = true;
+            }
+        }
+        if (!timThay) cout << "=> Khong co phong nao phu hop.\n";
+    }
+
+    // 7. Sap xep danh sach theo Gia thue tang dan
+    void sapXepGia() {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (ds[i].getGia() > ds[j].getGia()) {
+                    Phong temp = ds[i];
+                    ds[i] = ds[j];
+                    ds[j] = temp;
+                }
+            }
+        }
+        cout << "=> Da sap xep danh sach theo gia thue tang dan!\n";
+    }
+};
+
+int main() {
+    QuanLy ql;
+    int luaChon;
+
+    do {
+        cout << "\n================ QUAN LY KHACH SAN ================\n";
+        cout << "1. Nhap danh sach phong ban dau\n";
+        cout << "2. Hien thi danh sach phong\n";
+        cout << "3. Bo sung phong vao vi tri k\n";
+        cout << "4. Xoa phong tai vi tri k\n";
+        cout << "5. Tim kiem phong theo Ma\n";
+        cout << "6. Tim kiem phong theo Trang thai\n";
+        cout << "7. Sap xep danh sach theo Gia thue (tang dan)\n";
+        cout << "0. Thoat\n";
+        cout << "Chon chuc nang: ";
+        cin >> luaChon;
+
+        switch (luaChon) {
+            case 1: ql.nhapDS(); break;
+            case 2: ql.xuatDS(); break;
+            case 3: {
+                int k;
+                cout << "Nhap vi tri k can chen (0 den n): ";
+                cin >> k;
+                ql.boSung(k);
+                }
+            case 4: {
+                int k;
+                cout << "Nhap vi tri k can xoa (0 den n-1): ";
+                cin >> k;
+                ql.xoa(k);
+                break;
+            }
+            case 5: {
+                char ma[15];
+                cout << "Nhap ma phong can tim: ";
+                cin >> ma;
+                ql.timTheoMa(ma);
+                break;
+            }
+            case 6: {
+                int tt;
+                cout << "Nhap trang thai can tim (1: Con trong, 0: Da thue): ";
+                cin >> tt;
+                ql.timTheoTrangThai(tt);
+                break;
+            }
+            case 7:
+                ql.sapXepGia();
+                ql.xuatDS();
+                break;
+            case 0:
+                cout << "Da thoat chuong trinh.\n";
+                break;
+            default:
+                cout << "Lua chon khong hop le, vui long nhap lai!\n";
+        }
+    } while (luaChon != 0);
+
+    return 0;
+}
