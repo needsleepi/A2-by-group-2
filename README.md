@@ -1,73 +1,22 @@
 # A2-by-group-2
 
-#include<bits/stdc++.h>>
-#include<iomanip>
-using namespace std;
-class phong{
-	private:
-		char ma, loai;
-		int tang, succhua;
-		float gia;
-		int trangthai;
-	public:
-		void nhap();
-		void xuat();		
-};
-
-phong a[200];
-
-void phong::nhap(){
-	cout<<"nhap ma phong: ";
-	cin>> ma;
-	cin.ignore();
-	cout<<"nhap loai phong: ";
-	cin>> loai;
-	cout<<"nhap tang: ";
-	cin>> tang;
-	cout<<"nhap suc chua: ";
-	cin>> succhua;
-	cout<<"nhap gia thue: ";
-	cin>> gia;
-	cout<<"nhap trang thai (1: con trong, 0: da thue): ";
-	cin>> trangthai;
-}
-
-void phong::xuat(){
-	cout<<left<<setw(10)<<ma
-		<<setw(10)<<loai
-		<<setw(10)<<tang
-		<<setw(12)<<succhua
-		<<setw(12)<<gia<<endl; 
-		 
-	if(trangthai==1){
-		cout<<"con trong"<< endl;
-	}else{
-		cout<<"dathue"<< endl;
-	}
-}
-
-	
-int main(){
-	int n;
-	
-	do{
-		cout<<"nhap so luong phong: ";
-		cin>>n;
-	}while(n<=0||n>=200);
-	cout<< "\nnhap sanh sach phong:\n ";
-		for(int i=0; i<n; i++){
-	cout<<"\nnhap phong thu "<<i+1<<":\n";
-	a[i].nhap();
-	}
-	cout<<"\ndanh sach phong khach san: \n";
-	cout<<left<<setw(10)<<"ma"
-		<<setw(10)<<"loai"
-		<<setw(10)<<"tang"
-		<<setw(12)<<"suc chua"
-		<<setw(12)<<"gia"<<endl; 
-		
-		for(int i=0; i<n; i++){
-	a[i].xuat();
-	}
-	return 0;
-}
+Chủ đề 8: 
+Quản lý danh sách Phòng khách sạn Xây dựng lớp quản lý đối tượng Phòng 
+khách sạn với các thuộc tính: mã phòng, loại phòng, tầng, sức chứa, giá thuê 
+mỗi đêm, trạng thái (còn trống/đã thuê) và các phương thức cần thiết. Sau đó 
+thực hiện quản lý danh sách n (0 < n < 200) phòng với các thao tác:  - Nhập danh sách phòng từ bàn phím, in danh sách ra màn hình;  - Sắp xếp danh sách theo thứ tự giá thuê tăng dần;  - Tìm kiếm phòng theo mã phòng hoặc trạng thái;  - Bổ sung hoặc xóa 1 phòng ở một vị trí cho trước trong danh sách. 
+1. Thành viên nhóm:  - Đào Đức Mạnh - K51A Sư phạm Tin học - Phạm  Mai Chi - K51A Sư phạm Tin học  - Hoàng Quỳnh Thư - K51A Sư phạm Tin học - Trần Thị Ngọc Ánh - K51A Sư phạm Tin học - Đỗ Hoàng Việt - K51A Sư phạm Tin học 
+2. Nội dung chính: Hoàn thiện bài code theo yêu cầu. 
+3. Kiến thức cần chuẩn bị: - Cách hoạt động của Class trong C++. - Cách hoạt động của private và public trong C++. - Kiến thức cơ bản về C++. 
+4. Các bước thực hiện: - Bước 1: Tóm tắt các lý thuyết cần sử dụng trong bài. (Đỗ Hoàng Việt) - Bước 2: Tạo khung, xây dựng lớp quản lý đối tượng phòng khách sạn 
+với các thuộc tính: mã phòng, loại phòng, tầng, sức chứa, giá thuê mỗi 
+đêm, trạng thái (còn trống/đã thuê) và các phương thức cần thiết. 
+(Trần Thị Ngọc Ánh) - Bước 3: Nhập danh sách phòng từ bàn phím, in danh sách ra màn 
+hình. (Hoàng Quỳnh Thư) - Bước 4: Sắp xếp danh sách theo thứ tự giá thuê tăng dần. (Đỗ Hoàng 
+Việt) - Bước 5: Tìm kiếm phòng theo mã phòng hoặc trạng thái. (Đào Đức 
+Mạnh) - Bước 6: Bổ sung hoặc xóa 1 phòng ở một vị trí cho trước trong danh 
+sách. (Phạm Mai Chi) 
+- Bước 7: Nhóm trưởng tổng hợp và chỉnh sửa lại bài tập. (Đào Đức 
+Mạnh) - Bước 8: Làm slide trình chiếu sản phẩm. (Trần Thị Ngọc Ánh; Hoàng 
+Quỳnh Thư) - Bước 9: Viết báo cáo tổng kết. (Phạm Mai Chi) 
+5. Sản phẩm: - Code trên Github. - Slide báo cáo.
