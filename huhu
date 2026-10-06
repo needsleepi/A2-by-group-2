@@ -1,0 +1,35 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+class phong {
+private:
+    string ma, loai;
+    int tang, succhua;
+    double gia;
+    int trangthai;
+public:
+    void nhap();
+    void xuat();
+};
+
+class quanly {
+private:
+    phong a[200];
+    int n;
+public:
+void nhapds();
+void xuatds();
+void sapxep();
+int timkiem(int x); 
+void bosungphong(int k);
+void xoaphong(int k);
+}
+
+int main() {
+   quanly ql;
+
+    return 0;
+}
