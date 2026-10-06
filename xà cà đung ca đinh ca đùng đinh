@@ -1,0 +1,16 @@
+Bước 4:
+// Hàm sắp xếp danh sách phòng theo giá thuê tăng dần
+void sapXepGiaThueTangDan(PhongKhachSan ds[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            // Nếu giá phòng đứng trước lớn hơn giá phòng đứng sau
+            if (ds[i].getGiaThue() > ds[j].getGiaThue()) {
+                // Hoán đổi 2 phòng cho nhau
+                PhongKhachSan temp = ds[i];
+                ds[i] = ds[j];
+                ds[j] = temp;
+            }
+        }
+    }
+    cout << "\n[Thong bao] Da sap xep danh sach theo gia thue tang dan!\n";
+}
